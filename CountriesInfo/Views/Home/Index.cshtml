@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Country>;
+@{ Layout = "_Layout";
+    ViewData["Title"] = "Countries";
+}
+<script language="JavaScript" type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+<h2>Countries</h2>
+<hr />
+<div>
+    <input type="text" id="search" onkeyup="search()" placeholder=" Search for country.." title="Type in a name" style="margin-left: 8px; ">
+</div>
+
+<div>
+    <table id="countriesTable" class="table table-sm table-striped table-bordered m-2">
+        <thead><tr><th>Name</th><th>Capital</th><th>Region</th><th>Flag</th><th></th></tr></thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+
+                    <td>@c.Name</td>
+                    <td>@c.Capital</td>
+                    <td>
+                        @c.Region
+                    </td>
+                    <td>
+                        <img src="@c.Flag" alt="Country flag" height="42" width="55">
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", "Country", new { countryId = c.Alpha3Code })
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function search() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("countriesTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>
+
+
